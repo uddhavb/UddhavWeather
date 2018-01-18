@@ -6,27 +6,30 @@
     android:layout_height="match_parent"
     tools:context="weather.bhosle.uddhav.uddhavweather.MainActivity">
 
-    <EditText
-        android:id="@+id/cityname"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="City Name"
-        android:inputType=""
-        android:maxLines="1"
-        android:singleLine="true"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="118dp" />
+        android:orientation="vertical" >
 
-    <Button
-        android:id="@+id/get_weather"
-        style="?android:textAppearanceSmall"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:onClick="signIn"
-        android:text="Weather"
-        android:textStyle="bold"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="185dp" />
+        <EditText
+            android:id="@+id/cityname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="City Name"
+            android:inputType=""
+            android:maxLines="1"
+            android:singleLine="true" />
+
+        <Button
+            android:id="@+id/weather"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Weather"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
 
 
 </android.support.constraint.ConstraintLayout>
