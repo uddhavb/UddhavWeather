@@ -23,10 +23,11 @@ public class Weather extends AppCompatActivity {
     String[] weekDays = new String[numberOfDays];
 
     String[] description = new String[numberOfDays];
-   // Integer[] imgid = new Integer[numberOfDays];
+  //
+    // Integer[] imgid = new Integer[numberOfDays];
     //Bitmap[] bmp = new Bitmap[numberOfDays];
-    String[] imgurl = new String[numberOfDays];
-    /*
+   // String[] imgurl = new String[numberOfDays];
+
     Integer[] imgid={ R.drawable.pic0,
             R.drawable.pic1,
             R.drawable.pic2,
@@ -39,7 +40,7 @@ public class Weather extends AppCompatActivity {
             R.drawable.pic4
 
             };
-*/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,7 +48,6 @@ public class Weather extends AppCompatActivity {
         //get the data from the api
         String data = getIntent().getExtras().getString("dataToWeather");
         try {
-           // System.out.println("NCSU ------------------------NCSU---------------------------NCSU------------------------NCSU");
             JSONObject json = new JSONObject(data);
             json = json.getJSONObject("forecast");
             json = json.getJSONObject("txt_forecast");
@@ -56,10 +56,10 @@ public class Weather extends AppCompatActivity {
             {
                 weekDays[i/2] = (jsonArray.getJSONObject(i)).getString("title");
                 description[i/2] = (jsonArray.getJSONObject(i)).getString("fcttext");
-                // imgid[i/2] = (jsonArray.getJSONObject(i)).getString("fcttext");
-                imgurl[i/2] = (jsonArray.getJSONObject(i)).getString("icon_url");
+                //imgid[i/2] = (jsonArray.getJSONObject(i)).getString("fcttext");
+                //imgurl[i/2] = (jsonArray.getJSONObject(i)).getString("icon_url");
             }
-            CustomListAdapter adapter=new CustomListAdapter(this, weekDays, imgurl, description);
+            CustomListAdapter adapter=new CustomListAdapter(this, weekDays, imgid, description);
             list = (ListView) findViewById(R.id.list10days);
             list.setAdapter(adapter);
 
