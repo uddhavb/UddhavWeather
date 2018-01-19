@@ -13,19 +13,21 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 
 public class CustomListAdapter extends ArrayAdapter<String> {
     private final Activity context;
     private final String[] itemname;
     //private final Integer[] imgid;
-    private final Integer[] imgid;
+    private final String[] imgurl;
     private final String[] description;
 
-    public CustomListAdapter(Activity context, String[] itemname, Integer[] imgid, String[] description) {
+    public CustomListAdapter(Activity context, String[] itemname, String[] imgurl, String[] description) {
         super(context, R.layout.list_days, itemname);
         this.context=context;
         this.itemname=itemname;
-        this.imgid = imgid;
+        this.imgurl = imgurl;
         this.description = description;
     }
 
@@ -37,14 +39,10 @@ public class CustomListAdapter extends ArrayAdapter<String> {
         ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
         TextView extratxt = (TextView) rowView.findViewById(R.id.fcttext);
         txtTitle.setText(itemname[position]);
-        imageView.setImageResource(imgid[position]);
-       // Glide.with(this.getContext())                 // <--this being the current activity I'm trying to show the gif in.
-       //         .load(imgurl)
-       //         .fitCenter()
-        //        .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-        //        .into(imageView);
-        //imageView.setImageBitmap(bmp[position]);
-
+        //imageView.setImageResource(imgurl[position]);
+        Picasso.with(context)
+                .load(imgurl[position])
+                .into(imageView);
         extratxt.setText(description[position]);
         return rowView;
     };
