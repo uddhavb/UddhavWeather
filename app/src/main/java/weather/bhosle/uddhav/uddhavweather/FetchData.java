@@ -20,12 +20,26 @@ import java.net.URL;
 
 public class FetchData extends AsyncTask {
 
+    public final String[] states = new String[]{"Armed Forces America",
+            "Armed Forces", "Armed Forces Pacific", "Alaska", "Alabama", "Arkansas", "Arizona", "California", "Colorado", "Connecticut",
+            "Washington DC", "Delaware", "Florida", "Georgia", "Guam", "Hawaii", "Iowa", "Idaho", "Illinois", "Indiana",
+            "Kansas", "Kentucky", "Louisiana", "Massachusetts", "Maryland", "Maine", "Michigan", "Minnesota", "Missouri", "Mississippi",
+            "Montana", "North Carolina", "North Dakota", "Nebraska", "New Hampshire", "New_Jersey", "New Mexico", "Nevada",
+            "New York", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee",
+            "Texas", "Utah", "Virginia", "Virgin Islands", "Vermont", "Washington", "Wisconsin", "West Virginia", "Wyoming"};
+    public final String[] stateCodes = {"AA","AE", "AP", "AK","AL", "AR", "AZ", "CA", "CO",
+            "CT", "DC", "DE", "FL","GA","GU","HI", "IA", "ID", "IL", "IN", "KS", "KY" ,"LA", "MA", "MD",
+            "ME", "MI", "MN", "MO", "MS", "MT", "NC", "ND", "NE", "NH", "NJ", "NM", "NV","NY","OH", "OK", "OR",
+                        "PA","PR","RI","SC","SD","TN","TX","UT","VA","VI","VT","WA","WI","WV","WY"};
+
     public static Context context;
 
     String url = "";
+    String City="";
+    String State="";
     FetchData(String city, Context context)
     {
-        url = "http://api.wunderground.com/api/24f0b7e4ed53f605/forecast10day/q/CA/" + city +".json";
+        City = city;
         this.context = context;
     }
 
@@ -35,12 +49,42 @@ public class FetchData extends AsyncTask {
     @Override
     protected Object doInBackground(Object[] objects) {
         try {
-            URL wunderGround = new URL("http://api.wunderground.com/api/24f0b7e4ed53f605/forecast10day/q/CA/San_Francisco.json");
+            //get the city and state.
+            URL cityState = new URL("http://autocomplete.wunderground.com/aq?query=" + City + "&c=US");
+            HttpURLConnection connectToAutoFill = (HttpURLConnection) cityState.openConnection();
+            InputStream input = connectToAutoFill.getInputStream();
+            BufferedReader br =new BufferedReader(new InputStreamReader(input));
+            String line = "";
+            while(line != null)
+            {
+                line = br.readLine();
+                if(line.contains(","))
+                    break;
+            }
+            line = line.substring(8);
+            int endIndex = line.indexOf(',');
+            City =line.substring(line.indexOf(":") + 3,endIndex);
+            line = line.substring(endIndex+1);
+            State = line.substring(1,line.indexOf(",")-1);
+
+            //remove spaces and replace with underscore
+            City = City.replaceAll(" ", "_");
+            System.out.println("CITY TO API URL _________________________" + City);
+            for(int i=0;i<states.length;i++)
+            {
+                if(states[i].equals(State))
+                {
+                    State = stateCodes[i];
+                    break;
+                }
+            }
+            System.out.println("STATE TO API URL _________________________" + State);
+            URL wunderGround = new URL("http://api.wunderground.com/api/24f0b7e4ed53f605/forecast10day/q/"+State+"/"+City+".json");
             HttpURLConnection urlconnection = (HttpURLConnection) wunderGround.openConnection();
             InputStream inputStream = urlconnection.getInputStream();
             BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
 
-            String line = "";
+            line = "";
             while(line != null)
             {
                 line = bufferedReader.readLine();
