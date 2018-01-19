@@ -5,3 +5,7 @@ This is a simple android application that takes in a city name and give the weat
     
 The application uses [Wunderworld API](https://www.wunderground.com/weather/api/d/docs)   
 
+### TESTING   
+the application can take in any city name in the united states. The name can be partial as well. The application will predict the city on clicking the Weather button.   
+
+
