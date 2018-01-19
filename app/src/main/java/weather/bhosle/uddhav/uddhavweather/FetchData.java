@@ -58,8 +58,12 @@ public class FetchData extends AsyncTask {
             while(line != null)
             {
                 line = br.readLine();
-                if(line.contains(","))
+                if(line==null || line.contains(","))
                     break;
+            }
+            if(line==null)
+            {
+                return null;
             }
             line = line.substring(8);
             int endIndex = line.indexOf(',');
